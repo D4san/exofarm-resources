@@ -229,8 +229,8 @@
             <li><a href="#ch-02"><span class="toc-num">02</span> Planetary Nitrogen Cycling &amp; Industrial Perturbations</a></li>
             <li><a href="#ch-03"><span class="toc-num">03</span> ExoFarm Scenarios &amp; Surface Flux Modeling</a></li>
             <li><a href="#ch-04"><span class="toc-num">04</span> Stellar Radiation &amp; Photochemical Amplification</a></li>
-            <li><a href="#ch-05"><span class="toc-num">05</span> Transmission Spectroscopy with JWST (TRAPPIST-1e)</a></li>
-            <li><a href="#ch-06"><span class="toc-num">06</span> Thermal Emission with LIFE &amp; Bayesian Retrievals</a></li>
+            <li><a href="#ch-05"><span class="toc-num">05</span> Transmission Spectroscopy &amp; JWST Signal-to-Noise (TRAPPIST-1e)</a></li>
+            <li><a href="#ch-06"><span class="toc-num">06</span> Thermal Emission with LIFE: Signal-to-Noise &amp; Bayesian Retrievals</a></li>
             <li><a href="#ch-07"><span class="toc-num">07</span> Limitations, Interpretation &amp; Future Directions</a></li>
           </ol>
         </nav>
@@ -451,17 +451,21 @@
         <article class="chapter-card" id="ch-05">
           <div class="chapter-badge">05</div>
           <div class="chapter-content">
-            <h3>Transmission Spectroscopy with JWST (TRAPPIST-1e)</h3>
+            <h3>Transmission Spectroscopy &amp; JWST Signal-to-Noise (TRAPPIST-1e)</h3>
             <p>
-              We investigated whether these photochemically amplified atmospheres could be observed in transmission around the benchmark ultracool dwarf <strong>TRAPPIST-1e</strong> (R<sub>p</sub> = 0.920 R<sub>⊕</sub>, M<sub>p</sub> = 0.6356 M<sub>⊕</sub>, R<sub>⋆</sub> = 0.1192 R<sub>⊙</sub>). Native transmission spectra were computed with <strong>POSEIDON</strong> (MacDonald 2023) at R = 10,000 using line-by-line cross sections from ExoMol, HITEMP, and HITRAN.
+              We investigated whether these photochemically amplified atmospheres could be observed in transmission around the benchmark ultracool dwarf <strong>TRAPPIST-1e</strong> (R<sub>p</sub> = 0.920 R<sub>⊕</sub>, M<sub>p</sub> = 0.6356 M<sub>⊕</sub>, R<sub>⋆</sub> = 0.1192 R<sub>⊙</sub>, T<sub>eff</sub> = 2566 K, log <em>g</em> = 5.2396, [Fe/H] = 0.04; Agol et al. 2021; Ducrot et al. 2020). Native transmission spectra were computed with <strong>POSEIDON</strong> (MacDonald 2023) at spectral resolution R = 10,000 across 0.5–20 µm using a 100-layer atmosphere (1 to 10⁻⁷ bar) and line-by-line cross sections from ExoMol, HITEMP, and HITRAN.
             </p>
+
+            <h4>Counterfactual Molecular Excess Definition</h4>
             <p>
-              To evaluate practical detectability, we simulated instrumental noise using <strong>PandExo</strong> (Batalha et al. 2017) for:
+              To isolate the spectral contribution of each agricultural perturbation relative to the pre-agricultural baseline (A0), we define two diagnostic quantities: the total spectral difference ΔD<sub>A<sub>j</sub> − A<sub>0</sub></sub>(λ) and the counterfactual single-molecule signal Δ<sub>X</sub>(A<sub>j</sub>, λ) for species X ∈ {N₂O, NH₃, H₂O}:
             </p>
-            <ul>
-              <li><strong>JWST NIRSpec PRISM:</strong> 0.6–5.3 µm</li>
-              <li><strong>JWST MIRI LRS:</strong> 5.0–12.0 µm</li>
-            </ul>
+            <div class="eq-box">
+              <code>ΔD<sub>A<sub>j</sub>−A<sub>0</sub></sub>(λ) = D<sub>A<sub>j</sub></sub>(λ) − D<sub>A<sub>0</sub></sub>(λ), &emsp; Δ<sub>X</sub>(A<sub>j</sub>, λ) = D<sub>full</sub>(A<sub>j</sub>, λ) − D<sub>X→A<sub>0</sub></sub>(A<sub>j</sub>, λ)</code>
+            </div>
+            <p>
+              Here, D<sub>X→A<sub>0</sub></sub>(A<sub>j</sub>, λ) is computed by replacing only the vertical profile of species X with its pre-agricultural A0 profile while holding the remaining atmospheric composition and P–T structure fixed at scenario A<sub>j</sub>. In transmission, the most prominent N₂O bands appear near <strong>2.8 µm</strong>, <strong>4.5 µm</strong>, and <strong>8.6 µm</strong>, reaching maximum differential transit depths of <strong>~17.5 ppm</strong> in A3 (~9.2 ppm in A2; ~4.2 ppm in A1). The strongest NH₃ feature occurs near <strong>10.7 µm</strong> with an amplitude of <strong>~8.3 ppm</strong> in A3, alongside weaker bands at 1.5–2.3 µm, 3.0 µm, and 6.1 µm.
+            </p>
 
             <!-- Figure 5: Transmission Residuals -->
             <figure class="chapter-figure zoomable-figure">
@@ -472,20 +476,100 @@
                    loading="lazy"/>
               <figcaption>
                 <strong>Figure 5: TRAPPIST-1e Transmission Spectra &amp; Net Molecular Residuals.</strong> 
-                Top panel: Total transit depth for A0–A3. Bottom panels: Molecular excess signals for N₂O, NH₃, and H₂O. Tap/click to enlarge.
+                Top panel: Total transit depth (R<sub>p</sub>/R<sub>⋆</sub>)² across 0.5–20 µm for scenarios A0–A3. Second panel: Net spectral residual relative to pre-agricultural baseline A0. Bottom three panels: Isolated counterfactual molecular signals Δ<sub>X</sub>(A<sub>j</sub>, λ) for N₂O, NH₃, and H₂O. Tap/click to enlarge.
               </figcaption>
             </figure>
 
-            <h4>Observational Limits of Transmission Spectroscopy</h4>
+            <h4>PandExo Noise Modeling &amp; Integrated Molecular Signal-to-Noise</h4>
             <p>
-              The most prominent N₂O features appear near 2.8 µm, 4.5 µm, and 8.6 µm, with maximum differential transit depths of approximately 17.5 ppm in scenario A3. The strongest NH₃ feature emerges near 10.7 µm with an amplitude of ~8.3 ppm.
+              To evaluate practical detectability with the <strong>James Webb Space Telescope (JWST)</strong>, we simulated realistic observational noise using <strong>PandExo</strong> (Batalha et al. 2017) for two complementary modes covering the near- and mid-infrared nitrogen bands:
             </p>
+            <ul>
+              <li><strong>JWST NIRSpec PRISM:</strong> 0.6–5.3 µm (captures the 2.8 µm and 4.5 µm N₂O bands and shortwave NH₃ features).</li>
+              <li><strong>JWST MIRI LRS (slitless):</strong> 5.0–12.0 µm (covers the 7.8–8.6 µm N₂O complex and the 10.5–10.7 µm NH₃ fundamental band).</li>
+            </ul>
             <p>
-              However, when integrated across the full instrumental wavelength channels with independent photon noise scaling:
+              Simulations adopted the stellar magnitude J = 11.354, an out-of-transit baseline equal to 3× the transit duration, an 80% full-well saturation limit, and zero systematic noise floor to establish optimistic photon-limited performance. For N<sub>tr</sub> co-added transits, channel uncertainties scale as σ<sub>i</sub>(N<sub>tr</sub>) = σ<sub>i,1</sub> / √N<sub>tr</sub>. Assuming independent spectral bins i within instrument k, the integrated molecular signal-to-noise ratio is computed in quadrature:
             </p>
+            <div class="eq-box">
+              <code>SNR<sub>X,k</sub>(1) = [ ∑<sub>i ∈ k</sub> ( Δ<sub>X,i</sub> / σ<sub>i,1</sub> )² ]<sup>1/2</sup>, &emsp; SNR<sub>X,k</sub>(N<sub>tr</sub>) = √N<sub>tr</sub> · SNR<sub>X,k</sub>(1)</code>
+            </div>
+
+            <!-- Figure 6: JWST Molecular SNR -->
+            <figure class="chapter-figure zoomable-figure">
+              <img src="assets/figures/jwst-transmission-snr.webp" 
+                   alt="Molecular signal-to-noise ratio in JWST transmission spectroscopy for TRAPPIST-1e with NIRSpec PRISM and MIRI LRS across 1, 10, and 100 transits." 
+                   width="1694" 
+                   height="1905" 
+                   loading="lazy"/>
+              <figcaption>
+                <strong>Figure 6: Molecular Signal-to-Noise in JWST Transmission Spectroscopy (TRAPPIST-1e).</strong> 
+                <strong>Panel (a):</strong> Spectral counterfactual signals for N₂O (purple) and NH₃ (magenta) in scenario A3 rebinned to NIRSpec PRISM and MIRI LRS wavelength grids, compared against 1σ observational noise envelopes for 1, 10, and 100 transits (and 100-transit simulated points). <strong>Panel (b):</strong> Integrated molecular S/N accumulated across each instrument bandpass at 1, 10, and 100 transits for scenarios A1, A2, and A3, with dashed horizontal reference thresholds at S/N = 3 and S/N = 5. Tap/click to enlarge.
+              </figcaption>
+            </figure>
+
+            <h4>Quantitative JWST Transmission S/N Progression &amp; Transit Thresholds</h4>
+            <p>
+              As shown in <strong>Figure 6a</strong>, single-transit noise envelopes overwhelm the molecular signals across the entire spectrum, and even after 100 transits the individual channel amplitudes remain comparable to or smaller than the 1σ per-bin uncertainties. Integrating over all spectral channels (<strong>Figure 6b</strong>) yields the following progression:
+            </p>
+            <div class="table-wrap">
+              <table class="data-table">
+                <caption><strong>Table 2:</strong> Integrated molecular S/N in JWST transmission spectroscopy for extreme agricultural scenario A3 on TRAPPIST-1e, and extrapolated transits required to reach S/N = 3 and 5 under √N<sub>tr</sub> scaling.</caption>
+                <thead>
+                  <tr>
+                    <th>Molecule (Scenario A3)</th>
+                    <th>Instrument Bandpass</th>
+                    <th>S/N (1 Transit)</th>
+                    <th>S/N (10 Transits)</th>
+                    <th>S/N (100 Transits)</th>
+                    <th>Transits for S/N = 3</th>
+                    <th>Transits for S/N = 5</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>N₂O</strong></td>
+                    <td>NIRSpec PRISM (0.6–5.3 µm)</td>
+                    <td>0.29</td>
+                    <td>0.93</td>
+                    <td><strong>2.9</strong></td>
+                    <td><strong>105</strong></td>
+                    <td><strong>290</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>N₂O</strong></td>
+                    <td>MIRI LRS (5.0–12.0 µm)</td>
+                    <td>0.09</td>
+                    <td>0.29</td>
+                    <td><strong>0.93</strong></td>
+                    <td>1,044</td>
+                    <td>2,900</td>
+                  </tr>
+                  <tr>
+                    <td><strong>NH₃</strong></td>
+                    <td>MIRI LRS (5.0–12.0 µm)</td>
+                    <td>&lt; 0.02</td>
+                    <td>&lt; 0.06</td>
+                    <td><strong>&lt; 0.20</strong></td>
+                    <td>27,320</td>
+                    <td>75,890</td>
+                  </tr>
+                  <tr>
+                    <td><strong>NH₃</strong></td>
+                    <td>NIRSpec PRISM (0.6–5.3 µm)</td>
+                    <td>&lt; 0.01</td>
+                    <td>&lt; 0.02</td>
+                    <td><strong>&lt; 0.06</strong></td>
+                    <td>332,476</td>
+                    <td>923,544</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
             <div class="callout callout-warning">
-              <strong>Transmission Detection Barrier:</strong><br/>
-              After <strong>100 transits</strong> with NIRSpec PRISM, the integrated molecular SNR for extreme N₂O (A3) reaches only <strong>S/N ≈ 2.9</strong> (MIRI reaches S/N ≈ 0.93). Achieving a 5σ detection requires ~290 transits. Ammonia is even more inaccessible, requiring formally &gt;10⁴ transits. Transmission spectroscopy with JWST is therefore statistically insufficient to resolve agricultural perturbations within standard mission allocations.
+              <strong>Observational Barrier in Transmission Spectroscopy:</strong><br/>
+              Even under the extreme ExoFarm scenario (A3, 15× modern agricultural flux) and zero systematic noise floor, <strong>N₂O with NIRSpec PRISM</strong>—the single most favorable molecule–instrument combination—reaches only <strong>S/N ≈ 2.9 after 100 transits</strong>, requiring <strong>105 transits for S/N = 3</strong> and <strong>290 transits for S/N = 5</strong>. Ammonia remains completely out of reach (&gt;2.7 × 10⁴ transits). Consequently, detecting agricultural nitrogen technosignatures in transmission around terrestrial M-dwarf planets is prohibitive within realistic JWST campaign allocations.
             </div>
           </div>
         </article>
@@ -494,12 +578,15 @@
         <article class="chapter-card" id="ch-06">
           <div class="chapter-badge">06</div>
           <div class="chapter-content">
-            <h3>Thermal Emission with LIFE &amp; Bayesian Retrievals</h3>
+            <h3>Thermal Emission with LIFE: Signal-to-Noise &amp; Bayesian Retrievals</h3>
             <p>
-              Because transmission geometry yields marginal signals, we examined direct mid-infrared thermal emission using the proposed <strong>LIFE (Large Interferometer for Exoplanets)</strong> nulling interferometer concept (Konrad et al. 2022; Angerhausen et al. 2024). We modeled an Earth-like temperate planet orbiting <strong>Proxima Centauri</strong> at 1.30 pc (R<sub>p</sub> = 1.23 R<sub>⊕</sub>, M<sub>p</sub> = 1.59 M<sub>⊕</sub>, distance 1.30 pc) using <strong>LIFEsim</strong> (Dannert et al. 2022) across 4–18.5 µm (R = 20, 31 spectral channels).
+              Because transmission geometry yields marginal signals, we examined direct mid-infrared thermal emission spectroscopy using the proposed <strong>LIFE (Large Interferometer for Exoplanets)</strong> spaceborne nulling interferometer concept (Quanz et al. 2022; Konrad et al. 2022; Angerhausen et al. 2024). Thermal emission directly probes vertical temperature gradients across the mid-infrared (4–18.5 µm), where N₂O and NH₃ possess strong fundamental ro-vibrational bands.
+            </p>
+            <p>
+              To maximize photon collection at 1.30 pc, we modeled a temperate terrestrial analog orbiting <strong>Proxima Centauri</strong> (R<sub>p</sub> = 1.23 R<sub>⊕</sub>, M<sub>p</sub> = 1.59 M<sub>⊕</sub>, g ≈ 10.30 m s⁻², R<sub>⋆</sub> = 0.141 R<sub>⊙</sub>, T<sub>eff</sub> = 3050 K; Anglada-Escudé et al. 2016; Suárez Mascareño et al. 2020). In thermal emission, agricultural scenarios produce deep absorption troughs: N₂O generates two prominent residual depressions at <strong>7–9 µm</strong> (reaching −0.74 × 10⁻¹⁸ W m⁻² µm⁻¹ in A3) and around <strong>17 µm</strong> (reaching −0.90 × 10⁻¹⁸ W m⁻² µm⁻¹), while NH₃ creates a distinct trough at <strong>10–11 µm</strong> (reaching −0.64 × 10⁻¹⁸ W m⁻² µm⁻¹ in A3).
             </p>
 
-            <!-- Figure 6: Emission Residuals -->
+            <!-- Figure 7: Emission Residuals -->
             <figure class="chapter-figure zoomable-figure">
               <img src="assets/figures/emission-residuals.webp" 
                    alt="Mid-infrared thermal emission spectra and molecular residuals for Proxima b analog." 
@@ -507,17 +594,105 @@
                    height="1396" 
                    loading="lazy"/>
               <figcaption>
-                <strong>Figure 6: Thermal Emission Spectra &amp; Molecular Residuals (Proxima b Analog).</strong> 
-                Planetary thermal flux (10⁻¹⁸ W m⁻² µm⁻¹) and isolated molecular residuals for N₂O (7–9 µm, ~17 µm) and NH₃ (10–11 µm). Tap/click to enlarge.
+                <strong>Figure 7: Mid-Infrared Thermal Emission Spectra &amp; Molecular Residuals (Proxima b Analog).</strong> 
+                Top panel: Planetary thermal emission flux (10⁻¹⁸ W m⁻² µm⁻¹) across 4–20 µm for A0–A3. Second panel: Total spectral difference relative to pre-agricultural baseline A0. Bottom panels: Counterfactual molecular emission residuals for N₂O, NH₃, and H₂O. Tap/click to enlarge.
               </figcaption>
             </figure>
 
-            <h4>Bayesian Atmospheric Retrieval Architecture</h4>
+            <h4>LIFEsim Instrumental Modeling &amp; Integrated Molecular S/N</h4>
             <p>
-              To account for real parameter degeneracies between temperature structure, planetary radius, and overlapping molecular opacities, we performed Bayesian retrievals on synthetic LIFE datasets using <strong>POSEIDON</strong> coupled with the nested sampling algorithm <strong>MultiNest</strong> (800 live points). The model retrieved an isochemical mixing ratio for six species (H₂O, CO₂, CH₄, O₃, N₂O, NH₃), planetary reference radius, and a 6-parameter Madhusudhan &amp; Seager (2009) P–T profile.
+              Observational sensitivity was simulated with <strong>LIFEsim</strong> (Dannert et al. 2022) in the <strong>LIFE reference configuration</strong> (LIFE X; Carrión-González et al. 2023): four 2 m collector apertures operating over <strong>4–18.5 µm</strong> at spectral resolution <strong>R = 20</strong> (31 spectral channels) with 5% total instrument throughput. The noise budget accounts for astrophysical photon noise from <strong>stellar leakage</strong>, <strong>local zodiacal thermal emission</strong>, and <strong>exozodiacal dust at 3 zodis</strong>, assuming scenarios without systematic floor limitations so that per-bin flux uncertainty scales as σ<sub>i</sub>(t) ∝ t<sup>−1/2</sup> and quadrature-summed molecular S/N grows as √t.
             </p>
 
-            <!-- Figure 7: Bayesian Retrievals -->
+            <!-- Figure 8: LIFE Molecular SNR -->
+            <figure class="chapter-figure zoomable-figure">
+              <img src="assets/figures/life-emission-snr.webp" 
+                   alt="Molecular signal-to-noise ratio for the Proxima Centauri b analog with LIFE across 1, 10, and 100 hours." 
+                   width="1861" 
+                   height="2077" 
+                   loading="lazy"/>
+              <figcaption>
+                <strong>Figure 8: Molecular Signal-to-Noise for the Proxima Centauri b Analog with LIFE.</strong> 
+                <strong>Panel (a):</strong> Spectral counterfactual signals |Δ<sub>X</sub>| for N₂O (purple) and NH₃ (magenta) in scenario A3 rebinned to the 31 LIFE channels (R = 20, 4–18.5 µm), plotted against 1σ LIFEsim noise curves for 1, 10, and 100 hours of observation. <strong>Panel (b):</strong> Integrated molecular S/N accumulated across the full LIFE bandpass at 1, 10, and 100 hours for scenarios A1, A2, and A3, with dashed horizontal reference lines at S/N = 3 and S/N = 5. Tap/click to enlarge.
+              </figcaption>
+            </figure>
+
+            <h4>Quantitative LIFE Thermal-Emission S/N Progression &amp; Integration Times</h4>
+            <p>
+              In striking contrast to JWST transmission spectroscopy, <strong>Figure 8a</strong> shows that the 7.5–8.5 µm and 16–18 µm N₂O bands in scenario A3 approach the 1σ noise curve within 1 hour and clearly exceed the 10-hour and 100-hour noise envelopes, while the 10–11 µm NH₃ band emerges above the per-channel uncertainty between 10 and 100 hours. Quadrature integration over all 31 spectral channels (<strong>Figure 8b</strong>) demonstrates rapid signal accumulation:
+            </p>
+
+            <div class="table-wrap">
+              <table class="data-table">
+                <caption><strong>Table 3:</strong> Integrated molecular S/N in LIFE mid-infrared thermal emission (Proxima b analog, 4–18.5 µm, R = 20) and integration times required to reach S/N = 3 and 5 under √t scaling.</caption>
+                <thead>
+                  <tr>
+                    <th>Scenario &amp; Molecule</th>
+                    <th>Primary Mid-IR Bands</th>
+                    <th>S/N (1 h)</th>
+                    <th>S/N (10 h)</th>
+                    <th>S/N (100 h)</th>
+                    <th>Time for S/N = 3</th>
+                    <th>Time for S/N = 5</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>A3 (Extreme) — N₂O</strong></td>
+                    <td>7.5–8.5 µm &amp; 16–18 µm</td>
+                    <td>1.89</td>
+                    <td><strong>5.97</strong></td>
+                    <td><strong>18.86</strong></td>
+                    <td><strong>~3 h</strong> (2.5 h)</td>
+                    <td><strong>~7 h</strong> (7.0 h)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>A3 (Extreme) — NH₃</strong></td>
+                    <td>9.5–11.5 µm</td>
+                    <td>0.49</td>
+                    <td>1.54</td>
+                    <td><strong>4.86</strong></td>
+                    <td><strong>~38 h</strong></td>
+                    <td><strong>~106 h</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>A1 (Modern Earth) — N₂O</strong></td>
+                    <td>7.5–8.5 µm &amp; 16–18 µm</td>
+                    <td>0.19</td>
+                    <td>0.61</td>
+                    <td><strong>1.92</strong></td>
+                    <td>~244 h</td>
+                    <td>~678 h</td>
+                  </tr>
+                  <tr>
+                    <td><strong>A1 (Modern Earth) — NH₃</strong></td>
+                    <td>9.5–11.5 µm</td>
+                    <td>0.04</td>
+                    <td>0.12</td>
+                    <td><strong>0.37</strong></td>
+                    <td>&gt; 6,500 h</td>
+                    <td>&gt; 18,000 h</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="callout callout-contrast">
+              <strong>Why Integrated S/N Alone Is Not Enough (Template S/N vs. Bayesian Retrieval):</strong><br/>
+              While integrated molecular S/N provides a crucial first-order metric of instrumental sensitivity, it is an <strong>optimistic template-matching diagnostic</strong>: it assumes that the exact spectral shape of the molecular excess is known <em>a priori</em> and that the reference atmospheric state is fixed without parameter degeneracies. In real spectral inversion, molecular features overlap with H₂O, CO₂, CH₄, and O₃ and are degenerate with the vertical pressure–temperature (P–T) profile and planetary radius. Establishing true molecular identification and abundance constraints therefore requires full <strong>Bayesian atmospheric retrievals</strong>.
+            </div>
+
+            <h4>Bayesian Atmospheric Retrieval Architecture</h4>
+            <p>
+              To rigorously account for parameter degeneracies, we performed full Bayesian atmospheric retrievals on synthetic LIFE datasets (at 1, 10, and 100 hours for A1 and A3) using <strong>POSEIDON</strong> coupled with the nested sampling algorithm <strong>MultiNest</strong> (800 live points). The retrieval parameter vector simultaneously explores:
+            </p>
+            <ul>
+              <li><strong>Six vertically constant (isochemical) log-mixing ratios:</strong> log₁₀(X<sub>i</sub>) for H₂O, CO₂, CH₄, O₃, N₂O, and NH₃ (uniform priors U(−12, −1)), with N₂ filling the background remainder.</li>
+              <li><strong>Planetary reference radius:</strong> R<sub>p,ref</sub> at 1 bar (Gaussian prior N(1.23 R<sub>⊕</sub>, 0.05 R<sub>⊕</sub>)).</li>
+              <li><strong>Six-parameter thermal structure:</strong> P–T profile parameterization of Madhusudhan &amp; Seager (2009) (α₁, α₂, log₁₀ P₁, log₁₀ P₂, log₁₀ P₃, and T<sub>ref</sub>).</li>
+            </ul>
+
+            <!-- Figure 9: Bayesian Retrievals -->
             <figure class="chapter-figure zoomable-figure">
               <img src="assets/figures/bayesian-retrievals.webp" 
                    alt="Marginalized posterior distributions for retrieved atmospheric species at 1, 10, and 100 hours of LIFE observations." 
@@ -525,19 +700,19 @@
                    height="1047" 
                    loading="lazy"/>
               <figcaption>
-                <strong>Figure 7: Bayesian Abundance Retrievals (1, 10, and 100 Hours).</strong> 
+                <strong>Figure 9: Bayesian Abundance Retrievals (1, 10, and 100 Hours).</strong> 
                 Marginalized posterior probability distributions for H₂O, CO₂, CH₄, O₃, N₂O, and NH₃ in scenarios A1 (green) and A3 (magenta). Vertical dotted lines mark effective pre-agricultural reference abundances (A0). Tap/click to enlarge.
               </figcaption>
             </figure>
 
             <h4>Bayesian Evidence &amp; Model Comparison</h4>
             <p>
-              Molecular presence was tested by calculating Bayes factors (B<sub>i</sub> = Z<sub>full</sub> / Z<sub>without i</sub>) via nested sampling molecular exclusions:
+              Molecular detection significance was quantified by running nested-sampling retrievals with and without each target species i and computing the log Bayes factor ln B<sub>i</sub> = ln Z<sub>full</sub> − ln Z<sub>without i</sub>, converted into an equivalent calibrated significance σ<sub>cal</sub> (following Benneke &amp; Seager 2013):
             </p>
 
             <div class="table-wrap">
               <table class="data-table">
-                <caption><strong>Table 2:</strong> Bayesian evidence comparisons (ln B ± δ<sub>num</sub> and calibrated significance σ<sub>cal</sub>) for LIFE observations.</caption>
+                <caption><strong>Table 4:</strong> Bayesian evidence comparisons (ln B ± δ<sub>num</sub> and calibrated significance σ<sub>cal</sub>) for LIFE observations.</caption>
                 <thead>
                   <tr>
                     <th>Time</th>
@@ -781,9 +956,9 @@
               btn.textContent = originalText;
               btn.classList.remove('copied');
             }, 2000);
-          } catch (err) {
+          } catch (err) {{
             console.error('Failed to copy', err);
-          }
+          }}
         });
       });
 
