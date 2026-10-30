@@ -461,6 +461,12 @@ p {
   line-height: 1.6;
 }
 
+.ref-header-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .skip-refs-btn {
   font-family: var(--font-sans);
   font-size: 13.5px;
@@ -1493,9 +1499,16 @@ p {
     align-items: flex-start;
     gap: 14px;
   }
-  .skip-refs-btn {
+  .ref-header-actions {
     width: 100%;
+    display: flex;
+    gap: 8px;
+  }
+  .ref-header-actions .skip-refs-btn {
+    flex: 1;
     text-align: center;
+    padding: 8px 10px;
+    font-size: 12px;
   }
   .ref-scope-tabs {
     flex-wrap: nowrap;
